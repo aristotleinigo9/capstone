@@ -1,5 +1,5 @@
 ## Google Data Analytics Capstone Project
-## Data Used: March 2021 to Februar 2022
+## Data Used: March 2021 to February 2022
 
 install.packages("tidyverse")
 install.packages("janitor")
