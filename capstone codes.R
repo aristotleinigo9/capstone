@@ -48,7 +48,7 @@ dim(df)
 nrow(df)
 sum(duplicated(df$ride_id))
 
-## Create nine nore tables.
+## Create nine more tables.
 df$date <- as.Date(df$started_at) 
 df$month <- format(as.Date(df$date), "%m")
 df$month_name <- format(as.Date(df$date), "%B")
@@ -63,13 +63,13 @@ df$season <- ifelse (df$month %in% c('06','07','08'), "Summer",
                                      ifelse (df$month %in% c('03','04','05'), "Spring", NA))))
 
 
-## Create another column ride length in seconds. Then determine the range
+## Create another column ride length in seconds. Then determine the range.
 ## Range is from -3482 sec to 3356649 sec
 df$ride_length <- difftime(df$ended_at,df$started_at)
 range(df$ride_length)
 
 ## Remove less than 60 sec and more than 24 hours or 86400 sec.
-## Less than 60 sec means the bike was not used. More than 24 hours means it was stolen.
+## Less than 60 sec meant the bike was not used. More than 24 hours meant it was stolen.
 ## Remove blank start and end station names.
 df <- df[!(df$start_station_name == ""| df$end_station_name == ""| 
              df$ride_length > 86400 | df$ride_length < 60),]
@@ -87,12 +87,12 @@ df$ride_length_min <- difftime(df$ended_at,df$started_at, units="mins")
 df$month_name <- ordered(df$month_name, levels=c("March", "April", "May", "June", "July","August","September","October","November","December","January", "February"))
 df$day <- ordered(df$day, levels=c("Sunday", "Monday","Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"))
 
-##Creae dtaframes with ride length's sum and average in minutes.
+##Create data frames with ride length's sum and average in minutes.
 clean.data.sum.min<-aggregate(df$ride_length_min~df$member_casual+df$rideable_type+df$month_name+df$season+df$weekday+df$start_hour, FUN = sum)
 clean.data.avg.min<-aggregate(df$ride_length_min~df$member_casual+df$rideable_type+df$month_name+df$season+df$weekday+df$start_hour, FUN = mean)
 
 
-##Creae dataframes with ride length's sum and average in hours.
+##Create data frames with ride length's sum and average in hours.
 clean.data.sum.hr<-aggregate(df$ride_length_hr~df$member_casual+df$rideable_type+df$month_name+df$season+df$weekday+df$start_hour, FUN = sum)
 clean.data.avg.hr<-aggregate(df$ride_length_hr~df$member_casual+df$rideable_type+df$month_name+df$season+df$weekday+df$start_hour, FUN = mean)
 
