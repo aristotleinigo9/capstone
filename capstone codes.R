@@ -1,5 +1,6 @@
 ## Google Data Analytics Capstone Project
 ## Data Used: March 2021 to February 2022
+## The codes I used below are inspired by the various authors which I saw as I prepared this capstone project. I give credit to all of them.
 
 install.packages("tidyverse")
 install.packages("janitor")
@@ -91,7 +92,7 @@ clean.data.sum.min<-aggregate(df$ride_length_min~df$member_casual+df$rideable_ty
 clean.data.avg.min<-aggregate(df$ride_length_min~df$member_casual+df$rideable_type+df$month_name+df$season+df$weekday+df$start_hour, FUN = mean)
 
 
-##Creae dtaframes with ride length's sum and average in hours.
+##Creae dataframes with ride length's sum and average in hours.
 clean.data.sum.hr<-aggregate(df$ride_length_hr~df$member_casual+df$rideable_type+df$month_name+df$season+df$weekday+df$start_hour, FUN = sum)
 clean.data.avg.hr<-aggregate(df$ride_length_hr~df$member_casual+df$rideable_type+df$month_name+df$season+df$weekday+df$start_hour, FUN = mean)
 
@@ -108,3 +109,12 @@ write.csv(start_lat_lng_stn, file = "start_lat_lng_stn.csv")
 write.csv(end_lat_lng_stn, file = "end_lat_lng_stn.csv")
 
 
+##Create data frame for number of rides.
+number.of.rides<-df %>% 
+  group_by(member_casual, rideable_type,month_name, season,weekday,start_hour) %>%                        
+  summarise(number_of_rides = n()		              
+            ,average_duration = mean(ride_length_min)) %>% 		      
+  arrange(member_casual,rideable_type,month_name,season, weekday,start_hour)
+
+##Save the data frame above as csv files to be used in Tableau.
+write.csv(number.of.rides,file="number.of.rides.csv")
